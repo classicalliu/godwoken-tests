@@ -3,6 +3,10 @@ name: Integration Test v1
 on:
   workflow_call:
     inputs:
+      kicker_repository:
+        type: string
+        description: 'The repository of https://github.com/RetricSu/godwoken-kicker.git'
+        required: false
       kicker_ref:
         type: string
         description: 'The reference of https://github.com/RetricSu/godwoken-kicker.git'
@@ -67,7 +71,7 @@ jobs:
     - name: Checkout Kicker # multiple repos (nested)
       uses: actions/checkout@v3
       with:
-        repository: RetricSu/godwoken-kicker
+        repository: ${{ inputs.kicker_repository || 'RetricSu/godwoken-kicker' }}
         # If this workflow is not triggered by workflow_call event, inputs.kicker_ref is empty.
         ref: ${{ inputs.kicker_ref || 'compatibility-changes' }}
         path: kicker
